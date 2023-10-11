@@ -10,6 +10,7 @@ public class PetService extends RestService {
         return "/pet";
     }
 
+    //добавление питомца
     public Pet createPet(Pet petRequest) {
         return given()
                 .body(petRequest)
@@ -18,4 +19,13 @@ public class PetService extends RestService {
                 .then().log().all()
                 .extract().as(Pet.class);
     }
+
+    public Pet getPet(Long id) {
+        return given()
+                .when()
+                .get("/" + id.toString())
+                .then().log().all()
+                .extract().as(Pet.class);
+    }
+
 }
