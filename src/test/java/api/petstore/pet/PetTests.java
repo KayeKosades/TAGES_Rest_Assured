@@ -1,6 +1,7 @@
 package api.petstore.pet;
 
 
+import api.petstore.pojo.InfoMessage;
 import api.petstore.pojo.pet.Pet;
 import api.petstore.utils.services.PetService;
 import org.junit.Assert;
@@ -39,6 +40,15 @@ public class PetTests {
         petApi.setResponseSpecOK200();
         Pet successGottenPet = petApi.getPet(validPet.getId());
         assertThat(validPet).isEqualTo(successGottenPet);
+    }
+
+    @Test
+    @Order(3)
+    public void deletePetTest() {
+        petApi.setResponseSpecOK200();
+        InfoMessage successDeletedPetMessage = petApi.deletePet(validPet.getId());
+        assertThat(successDeletedPetMessage.getCode()).isEqualTo(200);
+        assertThat(successDeletedPetMessage.getMessage()).isEqualTo(validPet.getId().toString());
     }
 
 
