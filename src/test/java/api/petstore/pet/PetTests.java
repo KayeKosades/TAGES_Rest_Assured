@@ -41,12 +41,5 @@ public class PetTests {
         assertThat(validPet).isEqualTo(successGottenPet);
     }
 
-    @Test
-    @Order(3)
-    public void deletePetTest() {
-        petApi.setResponseSpecOK200();
-        Long id = validPet.getId();
-
-    }
 
 }
