@@ -1,4 +1,4 @@
-package api.petstore.utils;
+package api.petstore.utils.generators;
 
 import api.petstore.pojo.pet.Category;
 import api.petstore.pojo.pet.Pet;
@@ -9,20 +9,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class PetGenerator {
+public class PetGenerator extends Generator<Pet> {
 
-    public static Pet getValidPet() {
+    @Override
+    public Pet generateValidObject() {
         Long id = randomId();
-
         Category category = new Category(randomId(), randomString(20));
-
         String name = randomString(20);
-
         List<String> photoUrls = Arrays.asList("https://4lapy.ru/resize/1664x1000/upload/medialibrary/270/2703fd71a17c0843c0b91bbe28c4fe0f.jpg");
-
         Tag tag = new Tag(randomId(), randomString(20));
         List<Tag> tags = Arrays.asList(tag);
-
         String status = randomStatus();
 
         return Pet.builder()
@@ -35,12 +31,7 @@ public class PetGenerator {
                 .build();
     }
 
-    private static String randomString(int length) {
-        return UUID.randomUUID().toString().substring(0, length);
-    }
-    private static Long randomId () {return new Random().nextLong(1000L); }
-
-    private static String randomStatus() {
+    private String randomStatus() {
         List<String> statuses = Arrays.asList("available", "pending", "sold");
         return statuses.get(new Random().nextInt(0, statuses.size()));
     }

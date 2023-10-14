@@ -3,11 +3,10 @@ package api.petstore.pet;
 
 import api.petstore.pojo.InfoMessage;
 import api.petstore.pojo.pet.Pet;
+import api.petstore.utils.generators.PetGenerator;
 import api.petstore.utils.services.PetService;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
-import static api.petstore.utils.PetGenerator.getValidPet;
 import static org.assertj.core.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -19,7 +18,7 @@ public class PetTests {
 
     @BeforeAll
     public static void setup() {
-        validPet = getValidPet();
+        validPet = new PetGenerator().generateValidObject();
         petApi = new PetService();
     }
 
@@ -27,7 +26,7 @@ public class PetTests {
     @Test
     @Order(1)
     //Добавление питомца с валидными данными
-    public void addValidPetTest() throws Exception {
+    public void addValidPetTest() {
         petApi.setResponseSpecOK200();
         Pet successCreatedPet = petApi.createPet(validPet);
 
