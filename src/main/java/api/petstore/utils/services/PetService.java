@@ -1,7 +1,9 @@
 package api.petstore.utils.services;
 
-import api.petstore.pojo.InfoMessage;
+import api.petstore.pojo.ApiResponse;
 import api.petstore.pojo.pet.Pet;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -29,12 +31,19 @@ public class PetService extends RestService {
                 .extract().as(Pet.class);
     }
 
-    public InfoMessage deletePet(Long id) {
+    public ApiResponse deletePet(Long id) {
         return given()
                 .when()
                 .delete(id.toString())
                 .then().log().all()
-                .extract().as(InfoMessage.class);
+                .extract().as(ApiResponse.class);
     }
 
+    public List<Pet> findPetByStatus(String status) {
+        return given()
+                .when()
+                .get("findByStatus?status="+status)
+                .then().log().all()
+                .extract().body().jsonPath().getList(".", Pet.class);
+    }
 }

@@ -1,18 +1,10 @@
 package api.petstore.store;
 
-import api.petstore.pojo.InfoMessage;
-import api.petstore.pojo.pet.Pet;
+import api.petstore.pojo.ApiResponse;
 import api.petstore.pojo.store.StoreOrder;
 import api.petstore.utils.generators.OrderGenerator;
 import api.petstore.utils.services.StoreService;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +25,7 @@ public class StoreTests {
     @Order(1)
     //Добавление питомца с валидными данными
     public void addValidOrderTest() {
-        //storeApi.setResponseSpecOK200();
+        storeApi.setResponseSpecOK200();
         StoreOrder successCreatedOrder = storeApi.createOrder(validOrder);
 
         assertThat(validOrder).isEqualTo(successCreatedOrder);
@@ -51,7 +43,7 @@ public class StoreTests {
     @Order(3)
     public void deleteOrderTest() {
         storeApi.setResponseSpecOK200();
-        InfoMessage successDeletedPetMessage = storeApi.deleteOrder(validOrder.getId());
+        ApiResponse successDeletedPetMessage = storeApi.deleteOrder(validOrder.getId());
         assertThat(successDeletedPetMessage.getCode()).isEqualTo(200);
         assertThat(successDeletedPetMessage.getMessage()).isEqualTo(validOrder.getId().toString());
     }

@@ -1,11 +1,13 @@
 package api.petstore.pet;
 
 
-import api.petstore.pojo.InfoMessage;
+import api.petstore.pojo.ApiResponse;
 import api.petstore.pojo.pet.Pet;
 import api.petstore.utils.generators.PetGenerator;
 import api.petstore.utils.services.PetService;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -26,7 +28,7 @@ public class PetTests {
     @Test
     @Order(1)
     //Добавление питомца с валидными данными
-    public void addValidPetTest() {
+    public void createPetTest() {
         petApi.setResponseSpecOK200();
         Pet successCreatedPet = petApi.createPet(validPet);
 
@@ -35,7 +37,7 @@ public class PetTests {
 
     @Test
     @Order(2)
-    public void getValidPetTest() {
+    public void getPetTest() {
         petApi.setResponseSpecOK200();
         Pet successGottenPet = petApi.getPet(validPet.getId());
         assertThat(validPet).isEqualTo(successGottenPet);
@@ -43,9 +45,17 @@ public class PetTests {
 
     @Test
     @Order(3)
+    public void findPetByStatusTest() {
+        petApi.setResponseSpecOK200();
+        List<Pet> foundPets = petApi.findPetByStatus(validPet.getStatus());
+        assertThat(foundPets.contains(validPet));
+    }
+
+    @Test
+    @Order(4)
     public void deletePetTest() {
         petApi.setResponseSpecOK200();
-        InfoMessage successDeletedPetMessage = petApi.deletePet(validPet.getId());
+        ApiResponse successDeletedPetMessage = petApi.deletePet(validPet.getId());
         assertThat(successDeletedPetMessage.getCode()).isEqualTo(200);
         assertThat(successDeletedPetMessage.getMessage()).isEqualTo(validPet.getId().toString());
     }
