@@ -8,6 +8,11 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 public class PetService extends RestService {
+
+    public PetService(String userSession) {
+        super(userSession);
+    }
+
     @Override
     protected String getBasePath() {
         return "/pet/";
@@ -15,7 +20,7 @@ public class PetService extends RestService {
 
     //добавление питомца
     public Pet createPet(Pet petRequest) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .body(petRequest)
                 .when()
                 .post()
@@ -24,7 +29,7 @@ public class PetService extends RestService {
     }
 
     public Pet getPet(Long id) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .when()
                 .get(id.toString())
                 .then().log().all()
@@ -32,7 +37,7 @@ public class PetService extends RestService {
     }
 
     public ApiResponse deletePet(Long id) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .when()
                 .delete(id.toString())
                 .then().log().all()
@@ -40,7 +45,7 @@ public class PetService extends RestService {
     }
 
     public List<Pet> findPetByStatus(String status) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .when()
                 .get("findByStatus?status="+status)
                 .then().log().all()

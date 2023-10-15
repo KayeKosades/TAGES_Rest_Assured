@@ -6,13 +6,18 @@ import api.petstore.pojo.store.StoreOrder;
 import static io.restassured.RestAssured.given;
 
 public class StoreService extends RestService {
+
+    public StoreService(String userSession) {
+        super(userSession);
+    }
+
     @Override
     protected String getBasePath() {
         return "/store/order/";
     }
 
     public StoreOrder createOrder(StoreOrder orderRequest) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .body(orderRequest)
                 .when()
                 .post()
@@ -21,7 +26,7 @@ public class StoreService extends RestService {
     }
 
     public StoreOrder getOrder(Long id) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .when()
                 .get(id.toString())
                 .then().log().all()
@@ -29,7 +34,7 @@ public class StoreService extends RestService {
     }
 
     public ApiResponse deleteOrder(Long id) {
-        return given()
+        return given().spec(REQ_SPEC)
                 .when()
                 .delete(id.toString())
                 .then().log().all()
