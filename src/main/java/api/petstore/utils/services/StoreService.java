@@ -1,7 +1,6 @@
 package api.petstore.utils.services;
 
-import api.petstore.pojo.InfoMessage;
-import api.petstore.pojo.pet.Pet;
+import api.petstore.pojo.ApiResponse;
 import api.petstore.pojo.store.StoreOrder;
 
 import static io.restassured.RestAssured.given;
@@ -29,12 +28,12 @@ public class StoreService extends RestService {
                 .extract().as(StoreOrder.class);
     }
 
-    public InfoMessage deleteOrder(Long id) {
+    public ApiResponse deleteOrder(Long id) {
         return given()
                 .when()
                 .delete(id.toString())
                 .then().log().all()
-                .extract().as(InfoMessage.class);
+                .extract().as(ApiResponse.class);
     }
 
 }

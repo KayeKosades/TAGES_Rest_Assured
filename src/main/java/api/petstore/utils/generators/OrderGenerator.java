@@ -15,7 +15,7 @@ public class OrderGenerator extends Generator<StoreOrder> {
     public StoreOrder generateValidObject() {
 
         Long id = randomId();
-        Long petId = randomId();;
+        Long petId = randomId();
         Integer quantity = randomInt(100);
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()

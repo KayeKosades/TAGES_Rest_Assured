@@ -18,6 +18,8 @@ public abstract class Generator<T> {
         return new Random().nextInt(max);
     }
 
+    protected Integer randomInt(Integer min, Integer max) { return new Random().nextInt(max-min+1); }
+
     protected Long randomId() {
         return randomLong(1000L);
     }
