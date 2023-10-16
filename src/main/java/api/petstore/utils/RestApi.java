@@ -45,20 +45,6 @@ public class RestApi {
         return new RestApi(userSession);
     }
 
-    public Object logout() {
-        ApiResponse successLogoutResponse = given()
-                .baseUri(BASE_URL)
-                .basePath("/user")
-                .when()
-                .get("/logout")
-                .then().log().all()
-                .extract().as(ApiResponse.class);
-        assert(successLogoutResponse.getCode()==200);
-        assert(successLogoutResponse.getMessage().equals("ok"));
-        return null;
-    }
-
-
     public PetService pet() {
         return pet;
     }

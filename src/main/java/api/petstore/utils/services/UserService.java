@@ -28,12 +28,12 @@ public class UserService extends RestService {
                 .extract().as(ApiResponse.class);
     }
 
-    public User getUser(String username) {
+    public<T> T getUser(String username, Class<T> clazz) {
         return given()
                 .when()
                 .get(username)
                 .then().log().all()
-                .extract().as(User.class);
+                .extract().as(clazz);
     }
 
     public ApiResponse createUserWithList(List<User> userList) {
@@ -41,6 +41,23 @@ public class UserService extends RestService {
                 .body(userList)
                 .when()
                 .post("createWithList")
+                .then().log().all()
+                .extract().as(ApiResponse.class);
+    }
+
+    public ApiResponse updateUser(User userRequest, String userName) {
+        return given()
+                .body(userRequest)
+                .when()
+                .put(userName)
+                .then().log().all()
+                .extract().as(ApiResponse.class);
+    }
+
+    public ApiResponse deleteUser(String userName) {
+        return given()
+                .when()
+                .delete(userName)
                 .then().log().all()
                 .extract().as(ApiResponse.class);
     }

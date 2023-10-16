@@ -68,10 +68,10 @@ public class StoreTests {
         assertThat(orderNotFoundError.getMessage()).isEqualTo("Order not found");
     }
 
-    //попытка удаления уже удалённого питомца
+    //попытка удалить уже удаленный заказ
     @Test
     @Order(5)
-    public void deleteNotExistPet() {
+    public void deleteNotExistOrder() {
         api.store().setResponseSpecError404();
         ApiResponse orderNotFoundError = api.store().deleteOrder(validOrder.getId());
 
