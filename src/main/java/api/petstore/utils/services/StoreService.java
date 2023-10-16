@@ -17,7 +17,7 @@ public class StoreService extends RestService {
     }
 
     public StoreOrder createOrder(StoreOrder orderRequest) {
-        return given().spec(REQ_SPEC)
+        return given()
                 .body(orderRequest)
                 .when()
                 .post()
@@ -25,16 +25,16 @@ public class StoreService extends RestService {
                 .extract().as(StoreOrder.class);
     }
 
-    public StoreOrder getOrder(Long id) {
-        return given().spec(REQ_SPEC)
+    public<T> T getOrder(Long id, Class<T> clazz) {
+        return given()
                 .when()
                 .get(id.toString())
                 .then().log().all()
-                .extract().as(StoreOrder.class);
+                .extract().as(clazz);
     }
 
     public ApiResponse deleteOrder(Long id) {
-        return given().spec(REQ_SPEC)
+        return given()
                 .when()
                 .delete(id.toString())
                 .then().log().all()

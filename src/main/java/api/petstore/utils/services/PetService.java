@@ -20,7 +20,7 @@ public class PetService extends RestService {
 
     //добавление питомца
     public Pet createPet(Pet petRequest) {
-        return given().spec(REQ_SPEC)
+        return given()
                 .body(petRequest)
                 .when()
                 .post()
@@ -28,16 +28,28 @@ public class PetService extends RestService {
                 .extract().as(Pet.class);
     }
 
-    public Pet getPet(Long id) {
-        return given().spec(REQ_SPEC)
+    //получение питомца по id и возвращение либо питомца, либо ошибки
+    public <T> T getPet(Long id, Class<T> clazz) {
+        return given()
                 .when()
                 .get(id.toString())
+                .then().log().all()
+                .extract().as(clazz);
+    }
+
+    //изменение питомца по id
+    public Pet updatePet(Pet petRequest) {
+        return given()
+                .body(petRequest)
+                .when()
+                .put()
                 .then().log().all()
                 .extract().as(Pet.class);
     }
 
+    //удаление питомца по id
     public ApiResponse deletePet(Long id) {
-        return given().spec(REQ_SPEC)
+        return given()
                 .when()
                 .delete(id.toString())
                 .then().log().all()
@@ -45,7 +57,7 @@ public class PetService extends RestService {
     }
 
     public List<Pet> findPetByStatus(String status) {
-        return given().spec(REQ_SPEC)
+        return given()
                 .when()
                 .get("findByStatus?status="+status)
                 .then().log().all()

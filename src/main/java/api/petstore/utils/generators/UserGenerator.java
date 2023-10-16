@@ -7,6 +7,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserGenerator extends Generator {
 
@@ -35,4 +37,11 @@ public class UserGenerator extends Generator {
     }
 
 
+    public List<User> validUserList(int size) {
+        List<User> userList = new ArrayList<>();
+        for(int i=0; i<size; i++) {
+            userList.add(generateValidObject());
+        }
+        return userList;
+    }
 }
