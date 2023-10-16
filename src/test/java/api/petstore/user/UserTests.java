@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTests {
@@ -32,6 +34,30 @@ public class UserTests {
         api.user().setResponseSpecOK200();
         ApiResponse successCreatedUserResponse = api.user().createUser(validUser);
         assertThat(successCreatedUserResponse.getCode()).isEqualTo(200);
+    }
+
+    @Test
+    @Order(2)
+    //Добавление питомца с валидными данными
+    public void getValidUserTest() {
+        api.user().setResponseSpecOK200();
+        User successGottenUser = api.user().getUser(validUser.getUsername());
+        assertThat(validUser).isEqualTo(successGottenUser);
+    }
+
+    @Test
+    @Order(3)
+    public void createUserWithList() {
+        api.user().setResponseSpecOK200();
+        List<User> userList = new UserGenerator().validUserList(10);
+        ApiResponse successCreatedUserListResponse = api.user().createUserWithList(userList);
+        assertThat(successCreatedUserListResponse.getCode()).isEqualTo(200);
+
+        //проверка, что пользователи из списка добавились в систему
+        for(User u : userList) {
+            User successGottenUser = api.user().getUser(u.getUsername());
+            assertThat(u).isEqualTo(successGottenUser);
+        }
     }
 
 

@@ -23,34 +23,39 @@ public abstract class RestService {
                 .setBasePath(getBasePath())
                 .setContentType(ContentType.JSON)
                 .build();
+        installSpecification();
     }
 
     public void setResponseSpecOK200() {
         RES_SPEC = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .build();
+        installSpecification();
     }
 
     public void setResponseSpecError404() {
         RES_SPEC = new ResponseSpecBuilder()
                 .expectStatusCode(404)
                 .build();
+        installSpecification();
     }
 
     public void setResponseSpecError400() {
         RES_SPEC = new ResponseSpecBuilder()
                 .expectStatusCode(400)
                 .build();
+        installSpecification();
     }
 
     public void setResponseSpecError500() {
         RES_SPEC = new ResponseSpecBuilder()
                 .expectStatusCode(500)
                 .build();
+        installSpecification();
     }
 
-    public static void installSpecification(RequestSpecification requestSpec, ResponseSpecification responseSpec){
-        RestAssured.requestSpecification = requestSpec;
-        RestAssured.responseSpecification = responseSpec;
+    public void installSpecification() {
+        RestAssured.requestSpecification = REQ_SPEC;
+        RestAssured.responseSpecification = RES_SPEC;
     }
 }
